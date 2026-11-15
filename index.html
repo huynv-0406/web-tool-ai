@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HAYZA AI MUSE PRO – Tool làm video AI bán hàng trên Muse tự động từ A đến Z</title>
+<meta name="description" content="Nhập ảnh sản phẩm, tool tự lập kịch bản, tạo ảnh từng cảnh, tạo video và ghép phim hoàn chỉnh có giọng đọc, nhạc nền, phụ đề. Gói 3 ngày 29K, 1 tháng 149K, 1 năm 499K.">
+<meta property="og:title" content="HAYZA AI MUSE PRO – Làm video AI bán hàng trên Muse chỉ với vài cú bấm">
+<meta property="og:description" content="Lập kịch bản → tạo ảnh → tạo video → ghép phim. Gói 3 ngày 29K, 1 tháng 149K, 1 năm chỉ 499K.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#5b21b6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b1233;
+  --ink-soft:#5d5578;
+  --violet:#6d28d9;
+  --violet-deep:#4c1d95;
+  --pink:#db2777;
+  --lav:#f3effe;
+  --lav-2:#e7defc;
+  --paper:#fcfbff;
+  --line:#ddd3f7;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{max-width:100%}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:8px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:700;text-decoration:none;border-radius:999px;padding:14px 26px;border:2px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 24px -10px rgba(109,40,217,.7)}
+.btn-primary:hover{background:var(--violet-deep)}
+.btn-pink{background:var(--pink);color:#fff;box-shadow:0 10px 24px -10px rgba(219,39,119,.7)}
+.btn-ghost{background:#fff;color:var(--violet-deep);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--violet)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;background:rgba(252,251,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.01em;text-decoration:none;color:var(--pink)}
+.logo small{color:var(--violet);font-weight:800}
+.top nav{display:flex;gap:26px;font-weight:600;font-size:15px;color:var(--ink-soft)}
+.top nav a{text-decoration:none}
+.top nav a:hover{color:var(--violet)}
+.top .btn{padding:10px 20px;font-size:15px}
+
+/* hero */
+.hero{padding:64px 0 80px;background:
+  radial-gradient(900px 420px at 85% -10%,var(--lav-2),transparent 70%),
+  var(--paper)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--violet-deep)}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--pink);display:block}
+h1{font-size:clamp(34px,5.2vw,58px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin:20px 0 20px;color:var(--ink)}
+h1 em{font-style:normal;color:var(--pink)}
+.lead{font-size:18px;color:var(--ink-soft);max-width:34em}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-note{margin-top:18px;font-size:14px;color:var(--ink-soft)}
+
+/* app mock */
+.mock{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 40px 80px -40px rgba(76,29,149,.45);overflow:hidden}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--lav)}
+.mock-bar span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.mock-bar b{margin-left:8px;font-size:13px;color:var(--ink-soft);font-weight:600}
+.mock-body{display:grid;grid-template-columns:42% 58%;min-height:340px}
+.mock-side{padding:18px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.mock-title{font-weight:800;color:var(--pink);font-size:15px;text-align:center;margin-bottom:4px}
+.step{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;font-weight:600;color:#a79fc2;background:#fff}
+.step b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--lav);font-size:12px;color:#a79fc2}
+.step.on{background:var(--violet);color:#fff;border-color:var(--violet)}
+.step.on b{background:var(--violet-deep);color:#fff}
+.mock-main{display:grid;place-items:center;padding:20px;text-align:center;background:linear-gradient(180deg,#fff,var(--lav))}
+.mock-main p{font-size:13px;font-weight:700;color:#8e7fd0;max-width:16em}
+.mock-main svg{width:64px;height:64px;margin:0 auto 12px;display:block;color:#efb3cf}
+
+/* sections */
+section{padding:88px 0}
+.sec-head{max-width:640px;margin-bottom:44px}
+h2{font-size:clamp(28px,3.6vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:800}
+.sec-head p{margin-top:14px;color:var(--ink-soft);font-size:17px}
+
+/* video mẫu theo ngách */
+.niche{background:linear-gradient(180deg,var(--paper),var(--lav))}
+.niche .sec-head{margin-inline:auto;text-align:center;max-width:680px}
+.niche-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:start}
+.niche-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--radius);padding:10px;position:relative;display:flex;flex-direction:column}
+.niche-card.top1{border-color:var(--pink);box-shadow:0 24px 50px -28px rgba(219,39,119,.65);transform:translateY(-8px)}
+.niche-rank{position:absolute;top:-12px;left:12px;z-index:2;background:var(--violet);color:#fff;font-weight:800;font-size:12px;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.niche-card.top1 .niche-rank{background:var(--pink)}
+.niche-video{position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#2a1a52,#1b1233)}
+.niche-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.niche-info{padding:12px 6px 6px}
+.niche-info h3{font-size:16px;line-height:1.3}
+.niche-info p{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.niche-note{text-align:center;margin-top:32px;color:var(--ink-soft);font-size:14px}
+@media (max-width:960px){
+  .niche-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(240px,62%);overflow-x:auto;scroll-snap-type:x mandatory;padding:16px 4px 12px;gap:14px}
+  .niche-card{scroll-snap-align:start}
+  .niche-card.top1{transform:none}
+}
+
+/* workflow */
+.flow{background:var(--lav)}
+.flow-list{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;list-style:none;counter-reset:s}
+.flow-list li{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;position:relative}
+.flow-list li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--violet);color:#fff;font-weight:800;margin-bottom:16px}
+.flow-list li:last-child::before{background:var(--pink)}
+.flow-list h3{font-size:18px;margin-bottom:6px}
+.flow-list p{font-size:15px;color:var(--ink-soft)}
+
+/* 2 cách làm: nhanh vs chi tiết */
+.mode-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:start;margin-bottom:28px}
+.mode-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--radius);padding:28px 26px}
+.mode-tag{display:inline-block;background:var(--lav-2);color:var(--violet-deep);font-weight:700;font-size:13px;padding:4px 12px;border-radius:999px;margin-bottom:12px}
+.mode-card h3{font-size:21px;margin-bottom:10px}
+.mode-desc{color:var(--ink-soft);font-size:15px;margin-bottom:16px}
+.mode-list{list-style:none;display:grid;gap:9px}
+.mode-list li{font-size:14px;color:var(--ink-soft);display:flex;gap:8px;align-items:flex-start}
+.mode-list li::before{content:"✓";color:var(--violet);font-weight:800;flex:none}
+.mode-card.mode-quick{border-color:var(--pink);background:linear-gradient(180deg,#fff,var(--lav))}
+.mode-card.mode-quick .mode-tag{background:var(--pink);color:#fff}
+.mode-card .flow-list{grid-template-columns:1fr;gap:12px}
+.mode-card .flow-list li{padding:16px 18px}
+.mode-note{text-align:center;color:var(--ink-soft);font-size:14px}
+@media (max-width:960px){.mode-grid{grid-template-columns:1fr}}
+
+/* features */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.feat{padding:28px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.feat:nth-child(3n){border-right:0}
+.feat:nth-last-child(-n+3){border-bottom:0}
+.feat h3{font-size:17px;margin-bottom:6px;color:var(--violet-deep)}
+.feat p{font-size:15px;color:var(--ink-soft)}
+
+/* pricing */
+.pricing{background:linear-gradient(180deg,var(--paper),var(--lav))}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:#fff;border:1.5px solid var(--line);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+.plan h3{font-size:20px}
+.plan .for{font-size:14px;color:var(--ink-soft);margin-top:2px;min-height:44px}
+.price{margin:20px 0 4px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.price strong{font-size:44px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.price span{color:var(--ink-soft);font-weight:600}
+.sub{font-size:14px;color:var(--ink-soft);min-height:22px}
+.plan ul{list-style:none;margin:22px 0 28px;display:grid;gap:11px;flex:1}
+.plan li{display:flex;gap:10px;font-size:15px}
+.plan li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--lav-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236d28d9' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+.plan .btn{width:100%}
+.plan.hot{background:var(--violet-deep);color:#fff;border-color:var(--violet-deep);transform:translateY(-12px);box-shadow:0 40px 70px -35px rgba(76,29,149,.8)}
+.plan.hot .for,.plan.hot .sub,.plan.hot .price span{color:#d9ccff}
+.plan.hot li::before{background-color:rgba(255,255,255,.18);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E")}
+.tag{position:absolute;top:-14px;left:28px;background:var(--pink);color:#fff;font-weight:700;font-size:13px;padding:5px 14px;border-radius:999px}
+.price-note{text-align:center;margin-top:36px;color:var(--ink-soft);font-size:15px}
+
+/* how to buy */
+.buy-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.buy-steps{list-style:none;counter-reset:b;display:grid;gap:16px}
+.buy-steps li{counter-increment:b;display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start}
+.buy-steps li::before{content:counter(b);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:2px solid var(--violet);color:var(--violet);font-weight:800}
+.buy-steps b{display:block;font-size:17px}
+.buy-steps span{color:var(--ink-soft);font-size:15px}
+.contact-card{background:var(--violet-deep);color:#fff;border-radius:28px;padding:40px 34px}
+.contact-card h3{font-size:24px;line-height:1.25}
+.contact-card p{color:#d9ccff;margin-top:10px}
+.phone{display:block;font-size:clamp(30px,4.4vw,40px);font-weight:800;letter-spacing:.01em;margin:22px 0;text-decoration:none;color:#fff}
+.contact-card .cta-row{margin-top:0}
+.contact-card .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.contact-card .btn-ghost:hover{border-color:#fff}
+
+/* faq */
+.faq{background:var(--lav)}
+.faq-list{max-width:780px;display:grid;gap:12px}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0}
+summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--violet);flex:none;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 22px 20px;color:var(--ink-soft)}
+
+/* final cta + footer */
+.final{padding:72px 0;text-align:center;background:var(--violet-deep);color:#fff}
+.final h2{max-width:20em;margin:0 auto}
+.final p{color:#d9ccff;margin:14px auto 28px;max-width:34em}
+.final .cta-row{justify-content:center}
+footer{padding:28px 0 96px;text-align:center;color:var(--ink-soft);font-size:14px}
+
+/* mobile sticky bar */
+.sticky{display:none}
+
+@media (max-width:960px){
+  .hero .wrap,.buy-grid{grid-template-columns:1fr}
+  .flow-list{grid-template-columns:1fr 1fr}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .feat:nth-child(3n){border-right:1px solid var(--line)}
+  .feat:nth-child(2n){border-right:0}
+  .feat:nth-last-child(-n+3){border-bottom:1px solid var(--line)}
+  .feat:nth-last-child(-n+2){border-bottom:0}
+  .plans{grid-template-columns:1fr;max-width:460px;margin-inline:auto}
+  .plan.hot{transform:none}
+  .top nav{display:none}
+}
+@media (max-width:600px){
+  section{padding:64px 0}
+  .hero{padding:40px 0 56px}
+  .flow-list,.feat-grid{grid-template-columns:1fr}
+  .feat,.feat:nth-child(n){border-right:0;border-bottom:1px solid var(--line)}
+  .feat:last-child{border-bottom:0}
+  .mock-body{grid-template-columns:1fr}
+  .mock-side{border-right:0;border-bottom:1px solid var(--line)}
+  .mock-main{min-height:170px}
+  .top .btn{display:none}
+  .sticky{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+  .sticky .btn{padding:12px 10px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">HAYZA AI <small>MUSE PRO</small></a>
+    <nav aria-label="Điều hướng">
+      <a href="#video-mau">Video mẫu</a>
+      <a href="#quy-trinh">Quy trình</a>
+      <a href="#tinh-nang">Tính năng</a>
+      <a href="#bang-gia">Bảng giá</a>
+      <a href="#hoi-dap">Hỏi đáp</a>
+    </nav>
+    <a class="btn btn-primary" href="tel:0345836356">Gọi 0345.83.63.56</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <span class="badge"><i></i>Tool làm video AI bán hàng trên Muse</span>
+      <h1>Chỉ cần ảnh sản phẩm. Tool làm xong <em>video</em> cho bạn.</h1>
+      <p class="lead">HAYZA AI MUSE PRO tự lập kịch bản, tạo ảnh từng cảnh, tạo video từ ảnh rồi ghép thành phim bán hàng hoàn chỉnh — có giọng đọc, nhạc nền, phụ đề, logo shop. Không cần quay, không cần diễn viên, không cần dựng phim. Chọn giọng vùng miền, ngôn ngữ, phong cách video theo ý bạn.</p>
+      <div class="cta-row">
+        <a class="btn btn-pink" href="#bang-gia">Xem bảng giá</a>
+        <a class="btn btn-ghost" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Dùng thử 3 ngày 29K</a>
+      </div>
+      <p class="hero-note">Gói 3 ngày chỉ 29.000đ. Gói 1 tháng 149.000đ.</p>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span></span><span></span><span></span><b>HAYZA AI MUSE PRO</b></div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <div class="mock-title">HAYZA AI MUSE PRO</div>
+          <div class="step on"><b>1</b>Lập kịch bản</div>
+          <div class="step"><b>2</b>Tạo ảnh tất cả cảnh</div>
+          <div class="step"><b>3</b>Tạo video tất cả cảnh</div>
+          <div class="step"><b>4</b>Ghép phim</div>
+        </div>
+        <div class="mock-main">
+          <div>
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4"><circle cx="32" cy="32" r="8"/><circle cx="32" cy="9" r="5"/><circle cx="12" cy="44" r="5"/><circle cx="52" cy="44" r="5"/><path d="M32 14v10M16 41l9-6M48 41l-9-6"/></svg>
+            <p>Thêm ảnh, nhập ý tưởng rồi bấm “1. Lập kịch bản”</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO MẪU THEO NGÁCH -->
+<section class="niche" id="video-mau">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Video mẫu theo từng ngành hàng</h2>
+      <p>5 ngành hàng phổ biến, xếp theo mức độ bán chạy trên sàn. Ngành nào cũng làm được bằng cùng một quy trình.</p>
+    </div>
+    <div class="niche-grid">
+      <article class="niche-card top1">
+        <span class="niche-rank">🔥 #1 Bán chạy nhất</span>
+        <div class="niche-video">
+          <video controls playsinline preload="metadata" muted>
+            <source src="video-my-pham.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="niche-info"><h3>Mỹ phẩm</h3><p>Son, kem, serum, chăm sóc da: ngành dẫn đầu doanh số trên sàn.</p></div>
+      </article>
+      <article class="niche-card">
+        <span class="niche-rank">#2 Bán chạy</span>
+        <div class="niche-video">
+          <video controls playsinline preload="metadata" muted>
+            <source src="video-gia-dung.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="niche-info"><h3>Gia dụng nhà bếp</h3><p>Nồi chiên, dụng cụ bếp, đồ tiện ích cho gian bếp.</p></div>
+      </article>
+      <article class="niche-card">
+        <span class="niche-rank">#3 Bán chạy</span>
+        <div class="niche-video">
+          <video controls playsinline preload="metadata" muted>
+            <source src="video-thoi-trang.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="niche-info"><h3>Thời trang</h3><p>Áo, váy, phụ kiện: lên mẫu mặc thử mà không cần người mẫu.</p></div>
+      </article>
+      <article class="niche-card">
+        <span class="niche-rank">#4</span>
+        <div class="niche-video">
+          <video controls playsinline preload="metadata" muted>
+            <source src="video-me-be.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="niche-info"><h3>Mẹ và bé</h3><p>Đồ dùng, quần áo, đồ chơi cho bé.</p></div>
+      </article>
+      <article class="niche-card">
+        <span class="niche-rank">#5</span>
+        <div class="niche-video">
+          <video controls playsinline preload="metadata" muted>
+            <source src="video-tpcn.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="niche-info"><h3>Thực phẩm chức năng</h3><p>Vitamin, collagen, sản phẩm chăm sóc sức khỏe.</p></div>
+      </article>
+    </div>
+    <p class="niche-note">Video mẫu được làm hoàn toàn bằng tool: không quay, không diễn viên, không dựng phim.</p>
+  </div>
+</section>
+
+<!-- QUY TRÌNH -->
+<section class="flow" id="quy-trinh">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>2 cách làm video, tùy bạn chọn</h2>
+      <p>Muốn ra video thật nhanh thì thả link sản phẩm là xong. Muốn tự tay kiểm soát từng cảnh thì làm theo quy trình chi tiết.</p>
+    </div>
+
+    <div class="mode-grid">
+      <div class="mode-card mode-quick">
+        <span class="mode-tag">Chỉ 1 bước</span>
+        <h3>⚡ Làm nhanh</h3>
+        <p class="mode-desc">Dán link sản phẩm từ Shopee hoặc TikTok Shop (được tối đa 10 link một lúc), bấm <strong>Đọc link</strong>. Tool tự lấy thông tin sản phẩm, tự chọn nhân vật, tự viết kịch bản, tự chọn giọng đọc rồi dựng thành video hoàn chỉnh — không cần qua từng bước.</p>
+        <ul class="mode-list">
+          <li>Dán nhiều link cùng lúc, ra hàng loạt video</li>
+          <li>Không có link thì nhập tay 1 sản phẩm cũng được</li>
+          <li>Vẫn chọn được ngôn ngữ, vùng miền, giọng đọc, số cảnh, tỷ lệ khung hình trước khi chạy</li>
+          <li>Phù hợp khi cần ra video nhanh, số lượng lớn</li>
+        </ul>
+      </div>
+
+      <div class="mode-card">
+        <span class="mode-tag">4 bước</span>
+        <h3>🎛️ Làm chi tiết</h3>
+        <p class="mode-desc">Tự tay kiểm soát từng cảnh: duyệt lại ảnh, video trước khi ghép phim, phù hợp khi cần video thật chỉn chu.</p>
+        <ol class="flow-list">
+          <li><h3>Lập kịch bản</h3><p>Nhập ý tưởng, thêm ảnh nhân vật và sản phẩm. Tool viết kịch bản chia sẵn từng cảnh.</p></li>
+          <li><h3>Tạo ảnh tất cả cảnh</h3><p>Tạo ảnh cho từng cảnh. Bạn duyệt nhân vật, sản phẩm và chọn lại cảnh chưa ưng.</p></li>
+          <li><h3>Tạo video tất cả cảnh</h3><p>Biến từng ảnh thành video ngắn, tạo hàng loạt thay vì làm từng cảnh bằng tay.</p></li>
+          <li><h3>Ghép phim</h3><p>Ghép các cảnh thành một video hoàn chỉnh, sẵn sàng đăng.</p></li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="mode-note">Cả 2 cách đều dùng chung 1 key, không tính phí riêng cho từng cách làm.</p>
+  </div>
+</section>
+
+<!-- TÍNH NĂNG -->
+<section id="tinh-nang">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Làm video nhanh hơn, ít thao tác thủ công hơn</h2>
+      <p>Những thứ bạn dùng hằng ngày đã có sẵn trong tool.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><h3>Đọc link Shopee / TikTok Shop</h3><p>Dán link sản phẩm, tool tự lấy thông tin để lập kịch bản, đỡ phải nhập tay.</p></div>
+      <div class="feat"><h3>Giọng đọc theo vùng miền</h3><p>Giọng Bắc, Nam Sài Gòn, miền Tây... chọn giọng hợp với khách hàng bạn đang bán.</p></div>
+      <div class="feat"><h3>Đa ngôn ngữ</h3><p>Việt, Hàn, Nhật, Trung, Thái, Pháp, Đức, Tây Ban Nha, Nga... mở rộng bán ra thị trường nước ngoài.</p></div>
+      <div class="feat"><h3>Nhiều phong cách video</h3><p>Vlog đời thường, điện ảnh, review sản phẩm, livestream, hoài cổ 90s, hoạt hình 3D... đổi phong cách tùy chiến dịch.</p></div>
+      <div class="feat"><h3>Ghép nhạc nền, phụ đề, logo shop</h3><p>Ghép phim tự động kèm nhạc nền, phụ đề tùy chỉnh màu chữ và logo shop của bạn.</p></div>
+      <div class="feat"><h3>Tạo ảnh bìa video</h3><p>Tự tạo ảnh bìa (poster) cho video, sẵn sàng đăng lên các nền tảng bán hàng.</p></div>
+      <div class="feat"><h3>Nhân vật và sản phẩm nhất quán</h3><p>Thêm tối đa 2 nhân vật và 1 sản phẩm để các cảnh giữ cùng một hình ảnh.</p></div>
+      <div class="feat"><h3>Làm nhiều dự án, nhiều tài khoản cùng lúc</h3><p>Chạy song song nhiều dự án và nhiều tài khoản Muse để ra video nhanh hơn.</p></div>
+      <div class="feat"><h3>Lưu mẫu cài đặt</h3><p>Lưu cấu hình hay dùng (giọng, phong cách, ngôn ngữ) thành mẫu, áp dụng lại chỉ bằng một lần chọn.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BẢNG GIÁ -->
+<section class="pricing" id="bang-gia">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Chọn gói phù hợp</h2>
+      <p>Mọi gói đều dùng đầy đủ quy trình 4 bước. Khác nhau ở thời hạn sử dụng.</p>
+    </div>
+
+    <div class="plans">
+      <article class="plan">
+        <h3>Gói 3 ngày</h3>
+        <p class="for">Dùng thử một video thật trước khi mua gói dài hạn.</p>
+        <div class="price"><strong>29.000đ</strong></div>
+        <p class="sub">Thanh toán một lần</p>
+        <ul>
+          <li>Dùng đầy đủ tính năng trong 3 ngày</li>
+          <li>Trải nghiệm quy trình 4 bước</li>
+          <li>Được hướng dẫn cài đặt và đăng nhập Muse</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Dùng thử 3 ngày</a>
+      </article>
+
+      <article class="plan">
+        <h3>Gói 1 tháng</h3>
+        <p class="for">Dành cho người mới bắt đầu hoặc làm video theo đợt.</p>
+        <div class="price"><strong>149.000đ</strong><span>/ tháng</span></div>
+        <p class="sub">Thanh toán một lần</p>
+        <ul>
+          <li>Dùng đầy đủ tính năng trong 30 ngày</li>
+          <li>Thư viện nhân vật và mẫu cài đặt</li>
+          <li>Nhiều tab dự án cùng lúc</li>
+          <li>Hỗ trợ qua điện thoại và Zalo</li>
+        </ul>
+        <a class="btn btn-primary" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Mua gói 1 tháng</a>
+      </article>
+
+      <article class="plan hot">
+        <span class="tag">Tiết kiệm nhất</span>
+        <h3>Gói 1 năm</h3>
+        <p class="for">Dành cho người làm video thường xuyên, bán hàng hoặc làm kênh.</p>
+        <div class="price"><strong>499.000đ</strong><span>/ năm</span></div>
+        <p class="sub">Chỉ khoảng 41.600đ mỗi tháng, rẻ hơn 72% so với mua lẻ từng tháng</p>
+        <ul>
+          <li>Dùng đầy đủ tính năng trong 12 tháng</li>
+          <li>Thư viện nhân vật và mẫu cài đặt</li>
+          <li>Nhiều tab dự án cùng lúc</li>
+          <li>Hỗ trợ qua điện thoại và Zalo</li>
+        </ul>
+        <a class="btn btn-pink" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Mua gói 1 năm</a>
+      </article>
+    </div>
+
+    <p class="price-note">12 tháng mua lẻ là 1.788.000đ. Gói 1 năm chỉ 499.000đ.</p>
+  </div>
+</section>
+
+<!-- CÁCH MUA -->
+<section id="cach-mua">
+  <div class="wrap buy-grid">
+    <div>
+      <div class="sec-head" style="margin-bottom:28px">
+        <h2>Mua trong 3 bước</h2>
+      </div>
+      <ol class="buy-steps">
+        <li><div><b>Liên hệ qua Zalo hoặc gọi điện</b><span>Cho mình biết bạn chọn gói nào, hoặc cần key dùng thử.</span></div></li>
+        <li><div><b>Thanh toán</b><span>Chuyển khoản theo thông tin được gửi qua Zalo.</span></div></li>
+        <li><div><b>Nhận key và bắt đầu</b><span>Nhập key vào tool, đăng nhập Muse và làm video đầu tiên.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="contact-card">
+      <h3>Cần tư vấn hoặc muốn dùng thử?</h3>
+      <p>Gọi hoặc nhắn Zalo, mình trả lời trực tiếp.</p>
+      <a class="phone" href="tel:0345836356">0345.83.63.56</a>
+      <div class="cta-row">
+        <a class="btn btn-pink" href="tel:0345836356">Gọi ngay</a>
+        <a class="btn btn-ghost" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Nhắn Zalo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="hoi-dap">
+  <div class="wrap">
+    <div class="sec-head"><h2>Câu hỏi thường gặp</h2></div>
+    <div class="faq-list">
+      <details>
+        <summary>Tool này hoạt động như thế nào?</summary>
+        <p>Tool chạy trên máy tính Windows và làm việc cùng Muse AI. Bạn đăng nhập tài khoản Muse ở khung bên phải, nhập ý tưởng, rồi bấm lần lượt 4 bước để ra video.</p>
+      </details>
+      <details>
+        <summary>Tôi có cần tài khoản Muse riêng không?</summary>
+        <p>Có. Tool dùng tài khoản Muse của bạn để tạo ảnh và video. Chúng tôi hướng dẫn bạn đăng nhập khi cài đặt.</p>
+      </details>
+      <details>
+        <summary>Dùng thử có mất phí không?</summary>
+        <p>Gói dùng thử 3 ngày giá 29.000đ, đủ để bạn tạo một video thật và xem chất lượng trước khi mua gói dài hạn.</p>
+      </details>
+      <details>
+        <summary>Hết hạn thì sao?</summary>
+        <p>Khi key hết hạn bạn gia hạn bằng cách liên hệ lại. Hạn dùng hiển thị ở cuối cửa sổ tool để bạn theo dõi.</p>
+      </details>
+      <details>
+        <summary>Tôi cần hỗ trợ cài đặt thì làm sao?</summary>
+        <p>Gọi hoặc nhắn Zalo 0345.83.63.56. Chúng tôi hướng dẫn từ lúc cài tool đến khi bạn tạo được video đầu tiên.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA CUỐI -->
+<div class="final">
+  <div class="wrap">
+    <h2>Thử một video thật, rồi quyết định</h2>
+    <p>Dùng thử 3 ngày chỉ 29.000đ, hoặc chọn thẳng gói 1 năm với giá 499.000đ.</p>
+    <div class="cta-row">
+      <a class="btn btn-pink" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Dùng thử 3 ngày 29K</a>
+      <a class="btn btn-ghost" href="tel:0345836356" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Gọi 0345.83.63.56</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 HAYZA AI MUSE PRO. Liên hệ: <a href="tel:0345836356">0345.83.63.56</a></div>
+</footer>
+
+<div class="sticky">
+  <a class="btn btn-ghost" href="tel:0345836356">Gọi ngay</a>
+  <a class="btn btn-pink" href="https://zalo.me/0345836356" target="_blank" rel="noopener">Nhắn Zalo</a>
+</div>
+
+</body>
+</html>
